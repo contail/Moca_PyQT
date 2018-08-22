@@ -16,7 +16,7 @@ class Form(QWidget):
         self.setupUi()
 
         #button hooks
-        self.pb.clicked.connect(lambda : self.get_file_name)
+        self.pb.clicked.connect(lambda : self.get_file_name())
 
     def setupUi(self):
         QWidget.__init__(self, flags=Qt.Widget)
