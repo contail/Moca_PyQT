@@ -16,18 +16,23 @@ import subprocess
 class Form(QWidget):
 
 
-    def ok_button(self, server_info):
-        # subprocess.call("python manage.py runserver "+server_info,shell=True)
-        subprocess.call("python main.py", shell=True)
-        self.close()
+
     def __init__(self):
+        super(self.__class__, self).__init__()
+        server_info = self.get_ip_info() + ":" + self.get_port_info() + "/admin 으로 \n 접속해주세요!"
+        self.setupUi(server_info)
+
+        #hooks button
+        self.OK_button.clicked.connect(lambda: self.ok_button(server_info))
+
+    def setupUi(self,server_info):
         QWidget.__init__(self, flags=Qt.Widget)
 
         self.setWindowTitle("웹서버 정보")
-        self.resize(480,320)
+        self.resize(480, 320)
         self.centralWidget = QtWidgets.QWidget(self)
         self.centralWidget.setObjectName("centralWidget")
-        server_info = self.get_ip_info() + ":" +self.get_port_info()+"/admin 으로 \n 접속해주세요!"
+
 
         self.label = QtWidgets.QLabel(self.centralWidget)
         self.label.setGeometry(QtCore.QRect(100, 100, 271, 80))
@@ -39,9 +44,12 @@ class Form(QWidget):
         self.OK_button.setGeometry(QtCore.QRect(180, 200, 120, 80))
         self.OK_button.setObjectName("buttonBox")
         self.OK_button.setText("확인")
-        self.OK_button.clicked.connect(lambda : self.ok_button(server_info))
 
 
+    def ok_button(self, server_info):
+        # subprocess.call("python manage.py runserver "+server_info,shell=True)
+        subprocess.call("python main.py", shell=True)
+        self.close()
 
 
     def get_ip_info(self):
