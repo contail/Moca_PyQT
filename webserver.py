@@ -6,13 +6,20 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QBoxLayout
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal, QThread
 
 from PyQt5 import QtCore, QtWidgets
+import subprocess
+
 
 
 class Form(QWidget):
 
+
+    def ok_button(self, server_info):
+        # subprocess.call("python manage.py runserver "+server_info,shell=True)
+        subprocess.call("python main.py", shell=True)
+        self.close()
     def __init__(self):
         QWidget.__init__(self, flags=Qt.Widget)
 
@@ -32,7 +39,9 @@ class Form(QWidget):
         self.OK_button.setGeometry(QtCore.QRect(180, 200, 120, 80))
         self.OK_button.setObjectName("buttonBox")
         self.OK_button.setText("확인")
-        self.OK_button.clicked.connect(self.close)
+        self.OK_button.clicked.connect(lambda : self.ok_button(server_info))
+
+
 
 
     def get_ip_info(self):
